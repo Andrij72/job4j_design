@@ -2,23 +2,28 @@ package ru.job4j.tdd;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 public class CinemaTest {
     @Test
     public void add() {
-        Session session = new Session3D();
         Cinema cinema = new Cinema3D();
         cinema.setName("Jobs: The Empire of temptation");
         Calendar startDate = Calendar.getInstance();
-        startDate.set(2020, 9, 10, 8, 30);
+        startDate.set(2020, 9, 10, 10, 30);
         Calendar finishDate = Calendar.getInstance();
-        finishDate.set(2020, 10, 9, 21, 30);
+        finishDate.set(2020, 9, 10, 11, 50);
+        Session sessionNew = new Session3D(cinema, startDate, finishDate);
+        cinema.add(sessionNew);
+        List<Session> sessions = cinema.find(session -> true);
+        assertTrue(sessions.contains(new Session3D()));
     }
 
     @Test
