@@ -1,8 +1,6 @@
 package io;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,8 +18,20 @@ public class LogFilter {
         return lines.stream().filter(e -> e.contains("404")).collect(Collectors.toList());
     }
 
+
+    public static void save(List<String> log, String file) {
+        try (PrintWriter writer = new PrintWriter(new BufferedOutputStream(new FileOutputStream(file)))) {
+            StringBuilder text = new StringBuilder();
+            log.forEach(e -> text.append(e + "\n"));
+            writer.write(text.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         List<String> log = filter("log.txt");
         log.forEach(System.out::println);
+        save(log, "404.txt");
     }
 }
