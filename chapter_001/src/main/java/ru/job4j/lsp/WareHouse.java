@@ -1,22 +1,26 @@
 package ru.job4j.lsp;
 
-import lombok.Getter;
-import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+public class WareHouse implements FoodSeparator {
+    List<Food> wareHouse = new ArrayList<>();
 
-public class WareHouse implements OperationAdd {
-    private List<Food> warehouseFoods = new ArrayList<>();
-
-    public void printFoods() {
-        System.out.println("Ware House contain: ");
-        warehouseFoods.forEach(System.out::println);
+    @Override
+    public void addFood(Food food) {
+        wareHouse.add(food);
     }
 
     @Override
-    public void addFoods(Food f) {
-        warehouseFoods.add(f);
+    public boolean accept(Food food) {
+        return (LocalDate.now().getDayOfYear() - food.getCreateDate()
+                .getDayOfYear() < 0.25 * food.getExpiryDate()) ? true : false;
+    }
+
+    public void printFoods() {
+        System.out.println("Ware House contain: ");
+        wareHouse.forEach(System.out::println);
     }
 }

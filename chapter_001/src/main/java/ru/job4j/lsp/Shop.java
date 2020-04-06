@@ -1,18 +1,34 @@
 package ru.job4j.lsp;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Shop implements OperationAdd {
-    private List<Food> shopFoods = new ArrayList<>();
+public class Shop implements FoodSeparator {
+    List<Food> shop = new ArrayList<>();
 
-    public void printFoods() {
-        System.out.println("Shop contains: ");
-        shopFoods.forEach(System.out::println);
+    @Override
+    public void addFood(Food food) {
+        shop.add(food);
     }
 
     @Override
-    public void addFoods(Food f) {
-        shopFoods.add(f);
+    public boolean accept(Food food) {
+        boolean res = false;
+        if (LocalDate.now().getDayOfYear() - food.getCreateDate().getDayOfYear() > 0.25 * food.getExpiryDate()
+                && LocalDate.now().getDayOfYear() - food.getCreateDate().getDayOfYear() < 0.75 * food.getExpiryDate()) {
+            res = true;
+        } else if (LocalDate.now().getDayOfYear() - food.getCreateDate().getDayOfYear() > 0.75 * food.getExpiryDate()
+                && LocalDate.now().getDayOfYear() - food.getCreateDate().getDayOfYear() <= food.getExpiryDate()) {
+            food.setDiscount(10);
+            res = true;
+        }
+        return res;
+    }
+
+    @Override
+    public void printFoods() {
+        System.out.println("Shop Foods: ");
+        shop.forEach(System.out::println);
     }
 }
