@@ -10,19 +10,17 @@ public class LogFilter {
 
     public static List<String> filter(String file) {
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
-            in.lines().forEach(lines::add);
-
+           in.lines().filter(e -> e.contains("404")).collect(Collectors.toList()).forEach(lines::add);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return lines.stream().filter(e -> e.contains("404")).collect(Collectors.toList());
+        return lines;
     }
-
 
     public static void save(List<String> log, String file) {
         try (PrintWriter writer = new PrintWriter(new BufferedOutputStream(new FileOutputStream(file)))) {
             StringBuilder text = new StringBuilder();
-            log.forEach(e -> text.append(e + "\n"));
+            log.forEach(e -> text.append(e).append(System.lineSeparator()));
             writer.write(text.toString());
         } catch (Exception e) {
             e.printStackTrace();
