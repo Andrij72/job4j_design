@@ -27,7 +27,7 @@ public class Shop extends Control {
     }
 
     @Override
-    public void printFoods() {
+     public void printFoods() {
         System.out.println("Shop Foods: ");
         shop.forEach(System.out::println);
     }
