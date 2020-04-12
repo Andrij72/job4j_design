@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WareHouse implements FoodSeparator {
+public class WareHouse extends Control {
     List<Food> wareHouse = new ArrayList<>();
 
     @Override

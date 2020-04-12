@@ -7,8 +7,8 @@ public class DemoSortProduct {
 
     public static void main(String[] args) {
         ControlQuality controller1 = new ControlQuality(new Shop());
-        ControlQuality controller2 = new ControlQuality(new WareHouse());
-        ControlQuality controller3 = new ControlQuality(new Trash());
+        ControlQuality controller2 = new  ControlQuality(new WareHouse());
+        ControlQuality controller3 = new  ControlQuality(new Trash());
 
         List<Food> receivedFoods = List.of(
                 new Food("banana", 9, LocalDate.of(2020, 04, 02), 3.0, 0),

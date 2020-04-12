@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Trash implements FoodSeparator {
+public class Trash extends Control {
     List<Food> trash = new ArrayList<>();
 
     @Override
