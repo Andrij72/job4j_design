@@ -26,7 +26,7 @@ public class Analizy {
                     out.add("Start server: " + me.getKey() + "\n");
                 }
                 if ((me.getValue().equals("200") || me.getValue().equals("300")) && check) {
-                    out.add("Finish server: " + me.getKey() + "\n");
+                    out.add(" Finish server: " + me.getKey() + "\n");
                     check = false;
                 }
             }
