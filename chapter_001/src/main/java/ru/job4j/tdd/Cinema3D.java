@@ -7,6 +7,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.function.Predicate;
 
+
+@Getter
+@Setter
 public class Cinema3D implements Cinema {
 private String name;
     public Cinema3D(String name) {
