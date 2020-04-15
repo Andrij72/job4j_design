@@ -1,5 +1,6 @@
 package ru.job4j.srp;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import static org.junit.Assert.*;
 
 public class ReportEngineProgrammerTest {
 
+    @Ignore
     @Test
     public void whenProgrammerGenerated() {
         MemStore store = new MemStore();
