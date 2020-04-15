@@ -41,7 +41,12 @@ public class ReportEngineProgrammerTest {
                 .append("</td> <td>")
                 .append(worker.getSalary())
                 .append("</td></tr> ")
-                .append(System.lineSeparator());
+                .append(System.lineSeparator())
+                .append("</table>")
+                .append(System.lineSeparator())
+                .append("</body>")
+                .append(System.lineSeparator())
+                .append("</html>");
         System.out.println(res.toString());
         assertThat(engine.generatePr(em -> true), is(res.toString()));
     }

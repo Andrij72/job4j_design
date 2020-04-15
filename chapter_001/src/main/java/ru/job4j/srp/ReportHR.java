@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class ReportHR {
-    private Store store;
+    private MemStore store;
 
     public ReportHR(Store store) {
-        this.store = store;
+        this.store = (MemStore) store;
     }
 
     public String generateHR(Predicate<Employer> filter) {
