@@ -10,7 +10,6 @@ import static org.junit.Assert.*;
 
 public class ReportEngineProgrammerTest {
 
-    @Ignore
     @Test
     public void whenProgrammerGenerated() {
         MemStore store = new MemStore();
