@@ -16,14 +16,24 @@ public class EchoServer {
                     String str;
                     while (!(str = in.readLine()).isEmpty()) {
                         System.out.println(str);
-                        if (str.contains("Bye")) {
+                        if (str.contains("Exit")) {
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                            out.write("Server shutdown!".getBytes());
+                            out.flush();
                             in.close();
                             out.close();
-                           server.close();
-                           break;
+                            server.close();
+                            break;
+                        } else if (str.contains("Hello")) {
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                            out.write("Hello everybody!".getBytes());
+                            break;
+                        } else {
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                            out.write(str.substring(str.indexOf("=") + 1).getBytes());
+                            break;
                         }
                     }
-                    out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
                 }
             }
         }
