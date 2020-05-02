@@ -7,10 +7,35 @@ import java.util.stream.Collectors;
 
 public class Analizy {
 
-    public static void unavailable(String source, String target) {
+    public static void checkLog(String source, String target) {
+        StringBuilder out = new StringBuilder();
 
+        try (BufferedReader buf = new BufferedReader(new FileReader(source));
+             BufferedWriter trg = new BufferedWriter(new FileWriter(target))) {
+            String line = "";
+            boolean check = false;
+            while ((line = buf.readLine()) != null) {
+                if ((line.contains("500") || line.contains("400")) && !check) {
+                    check = true;
+                    out.append("Start server: ").append(line.substring(4)).append(System.lineSeparator());
+                }
+                if ((line.contains("200") || line.contains("300")) && check) {
+                    out.append(" Finish server: ").append(line.substring(4)).append(System.lineSeparator());
+                    check = false;
+                }
+            }
+            trg.write(out.toString());
+            System.out.println(out);
+        } catch (
+                IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public static void unavailable(String source, String target) {
         StringJoiner out = new StringJoiner(System.lineSeparator());
-        try (BufferedReader buf = new BufferedReader(new FileReader(source))) {
+        try (BufferedReader buf = new BufferedReader(new FileReader(source));
+             PrintWriter trg = new PrintWriter(new FileOutputStream(target))) {
             AtomicBoolean check = new AtomicBoolean(false);
             buf.lines()
                     .filter(l -> !l.isBlank())
@@ -27,15 +52,8 @@ public class Analizy {
                     })
                     .findAny();
 
-        } catch (
-                IOException ex) {
-            ex.printStackTrace();
-        }
-
-        try (PrintWriter trg = new PrintWriter(new FileOutputStream(target))) {
             trg.println(out.toString());
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -43,7 +61,6 @@ public class Analizy {
     public static void anotherUnavailable(String source, String target) {
         Map<String, String> values = new HashMap<>();
         StringJoiner out = new StringJoiner(System.lineSeparator());
-
         try (BufferedReader buf = new BufferedReader(new FileReader(source))) {
             buf.lines()
                     .filter(l -> !l.isBlank()).filter(l -> !l.isBlank())
@@ -64,8 +81,7 @@ public class Analizy {
                     check = false;
                 }
             }
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -78,6 +94,7 @@ public class Analizy {
     }
 
     public static void main(String[] args) {
-        unavailable("servers.log", "unavailable.csv");
+        //anotherUnavailable("servers.log", "unavailable.csv");
+        checkLog("servers.log", "unavailable.csv");
     }
 }
