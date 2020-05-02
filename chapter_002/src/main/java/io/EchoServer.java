@@ -14,12 +14,11 @@ public class EchoServer {
 
     public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(9000)) {
-            while (true) {
+            while (!server.isClosed()) {
                 Socket socket = server.accept();
                 try (OutputStream out = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
-                    while (true) {
                         String str = in.readLine();
                         if (!str.isEmpty()) {
                             System.out.println(str);
@@ -34,16 +33,13 @@ public class EchoServer {
                             } else if (str.contains("Hello")) {
                                 out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                                 out.write("Hello everybody!".getBytes());
-                                break;
                             } else {
                                 out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                                 out.write(str.substring(str.indexOf("=") + 1).getBytes());
-                                break;
                             }
                         }
                     }
                 }
-            }
         } catch (Exception ex) {
             LOG.error("Write in log socket exception", ex.getStackTrace());
         }
