@@ -7,31 +7,41 @@ import java.util.stream.Collectors;
 
 public class Analizy {
 
+    /**It's first variant of log server analise method
+     * @param source
+     * @param target
+     */
     public static void checkLog(String source, String target) {
-        StringBuilder out = new StringBuilder();
-
-        try (BufferedReader buf = new BufferedReader(new FileReader(source));
-             BufferedWriter trg = new BufferedWriter(new FileWriter(target))) {
+        List<String> out = new LinkedList<>();
+        try (BufferedReader buf = new BufferedReader(new FileReader(source))) {
             String line = "";
             boolean check = false;
             while ((line = buf.readLine()) != null) {
                 if ((line.contains("500") || line.contains("400")) && !check) {
                     check = true;
-                    out.append("Start server: ").append(line.substring(4)).append(System.lineSeparator());
+                    out.add("Start server: " + line.substring(4));
                 }
                 if ((line.contains("200") || line.contains("300")) && check) {
-                    out.append(" Finish server: ").append(line.substring(4)).append(System.lineSeparator());
+                    out.add(" Finish server: " + line.substring(4));
                     check = false;
                 }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter trg = new BufferedWriter(new FileWriter(target))) {
             trg.write(out.toString());
-            System.out.println(out);
-        } catch (
-                IOException ex) {
+            out.forEach(System.out::println);
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
+    /**It's 2-nd variant of log server analise method
+     * @param source
+     * @param target
+     */
     public static void unavailable(String source, String target) {
         StringJoiner out = new StringJoiner(System.lineSeparator());
         try (BufferedReader buf = new BufferedReader(new FileReader(source));
@@ -58,6 +68,10 @@ public class Analizy {
         }
     }
 
+    /**It's third variant of log server analise method
+     * @param source
+     * @param target
+     */
     public static void anotherUnavailable(String source, String target) {
         Map<String, String> values = new HashMap<>();
         StringJoiner out = new StringJoiner(System.lineSeparator());
