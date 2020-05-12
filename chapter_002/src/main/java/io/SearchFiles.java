@@ -2,25 +2,42 @@ package io;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
-public class SearchFiles extends PrintFiles {
+import static java.nio.file.FileVisitResult.CONTINUE;
+
+public class SearchFiles implements FileVisitor<Path> {
     private List<Path> archived = new ArrayList<>();
-    private String xt = "";
+    private Predicate<Path> predicate = null;
+    public SearchFiles(Predicate<Path> predicate) {
+        this.predicate = predicate;
+    }
 
-    public SearchFiles(String xt) {
-        this.xt = xt;
+    @Override
+    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+        return CONTINUE;
+    }
+
+    @Override
+    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+        return CONTINUE;
+    }
+
+    @Override
+    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+        return CONTINUE;
     }
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-            if (file.toFile().getName().endsWith(xt)) {
-               archived.add(file);
+        if (predicate.test(file)) {
+            archived.add(file);
         }
-
         return FileVisitResult.CONTINUE;
     }
 
