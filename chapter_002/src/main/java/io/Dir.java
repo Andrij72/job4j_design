@@ -4,7 +4,7 @@ import java.io.File;
 
 public class Dir {
     public static void main(String[] args) {
-        File file = new File("D:\\projects");
+        File file = new File("D:\\projects\\job4j\\");
         if (!file.exists()) {
             throw new IllegalArgumentException(String.format("Not exist %s ", file.getAbsolutePath()));
         }
@@ -14,7 +14,7 @@ public class Dir {
 
         for (File subfile : file.listFiles()) {
             System.out.print(String.format(" filename: %s ", subfile.getName()));
-            System.out.println(String.format("|size: %s ", subfile.getTotalSpace()));
+            System.out.println(String.format("|size: %s ", subfile.length()));
         }
     }
 }
