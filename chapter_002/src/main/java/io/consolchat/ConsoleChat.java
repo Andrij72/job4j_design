@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
 /**
  * This Console Chat program. Some description: *
  * - the user enters a word-phrase, the program takes a random phrase from a text file and outputs it in response.
