@@ -5,7 +5,7 @@ import io.SearchFiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -33,10 +33,23 @@ public class SearchFile {
         return searcher.getArchived();
     }
 
+    public static void writeFiles(List<Path> files) {
+        try (PrintWriter out = new PrintWriter(
+                new BufferedOutputStream(
+                        new FileOutputStream("LOGFILEEEEEE.txt")
+                ))) {
+            StringBuilder buf = new StringBuilder();
+            files.forEach(f -> buf.append(f + System.lineSeparator()));
+            out.write(buf.toString());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     public static void main(String[] args) throws IOException {
-        search(Path.of("./"), "jar").forEach(System.out::println);
-
+        writeFiles(search(Path.of(""), "java"));
     }
+
 }
