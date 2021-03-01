@@ -1,8 +1,6 @@
 package io.filefinder;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.util.List;
 
 public class Parameters {
     private static final int DIR_KEY = 0;
@@ -18,7 +16,7 @@ public class Parameters {
     }
 
 
-    public void validateParams(List<Path> files) {
+    public void validateParams() {
         if (args.length != 7) {
             throw new IllegalArgumentException(
                     "Not enough parameters !  Usage sample:  java -jar find.jar -d=c:/ -n=*.txt -t=mask -o=log.txt");

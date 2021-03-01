@@ -1,6 +1,5 @@
 package io.filefinder;
 
-import io.EchoServer;
 import io.SearchFiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +8,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * 1. Создать программу для поиска файла.
@@ -25,7 +25,10 @@ import java.util.List;
  */
 
 public class SearchFile {
-    private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(SearchFiles.class.getName());
+    public static StringBuilder buf = new StringBuilder();
+    private static boolean pattern;
+    FactoryPredicate ext = new FactoryPredicate();
 
     public static List<Path> search(Path root, String ext) throws IOException {
         SearchFiles searcher = new SearchFiles(x -> x.toFile().getName().endsWith(ext));
@@ -38,7 +41,7 @@ public class SearchFile {
                 new BufferedOutputStream(
                         new FileOutputStream("LOGFILEEEEEE.txt")
                 ))) {
-            StringBuilder buf = new StringBuilder();
+
             files.forEach(f -> buf.append(f + System.lineSeparator()));
             out.write(buf.toString());
         } catch (FileNotFoundException e) {
@@ -46,10 +49,10 @@ public class SearchFile {
         }
     }
 
-
-
     public static void main(String[] args) throws IOException {
-        writeFiles(search(Path.of(""), "java"));
+        new Parameters(args).validateParams();
+                writeFiles(search(Path.of(""), Predicate<String> pattern));
+        LOG.warn("Var buf:{}", buf);
     }
 
 }
