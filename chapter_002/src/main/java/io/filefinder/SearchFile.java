@@ -31,7 +31,7 @@ public class SearchFile {
     private static final Logger LOG = LoggerFactory.getLogger(SearchFiles.class.getName());
     public static StringBuilder buf = new StringBuilder();
 
-    public static List<Path> search(Path root,  Predicate<Path> condition) throws IOException {
+    public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
         SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
         return searcher.getArchived();
@@ -51,12 +51,12 @@ public class SearchFile {
     }
 
     public static void main(String[] args) throws IOException {
-        Parameters prm =  new Parameters(args);
-       prm.validateParams();
-       Predicate<Path> condition = new FactoryPredicate().conditionSet(prm);
+        Parameters prm = new Parameters(args);
+        prm.validateParams();
+        Predicate<Path> condition = new FactoryPredicate().conditionSet(prm);
 
-        List<Path>  files =  search(Path.of(prm.getDir()), condition);
-                writeFiles(files, prm.getLog());
+        List<Path> files = search(Path.of(prm.getDir()), condition);
+        writeFiles(files, prm.getLog());
         LOG.warn("Var buf:{}", buf);
     }
 

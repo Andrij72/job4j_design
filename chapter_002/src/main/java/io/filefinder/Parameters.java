@@ -49,7 +49,7 @@ public class Parameters {
     }
 
     public String getLog() {
-        return args[LOG_KEY+1];
+        return args[LOG_KEY + 1];
     }
 
 }

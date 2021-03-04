@@ -12,7 +12,6 @@ public class FactoryPredicate {
         switch (params.getSearchType().toLowerCase()) {
             case "name":
                 return option = new FinderConditions(params.getExtKey());
-
             case "mask":
                 return option = new FinderConditions(this.getMask(params.getExtKey()));
         }
