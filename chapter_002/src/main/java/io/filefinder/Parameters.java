@@ -17,7 +17,7 @@ public class Parameters {
 
 
     public void validateParams() {
-        if (args.length != 7) {
+        if (args.length != 8) {
             throw new IllegalArgumentException(
                     "Not enough parameters !  Usage sample:  java -jar find.jar -d=c:/ -n=*.txt -t=mask -o=log.txt");
         }
@@ -35,4 +35,21 @@ public class Parameters {
                     "Directory not exist or it's not directory!");
         }
     }
+
+    public String getDir() {
+        return args[DIR_KEY + 1];
+    }
+
+    public String getExtKey() {
+        return args[EXT_KEY + 1];
+    }
+
+    public String getSearchType() {
+        return args[SEARCH_TYPE_KEY + 1];
+    }
+
+    public String getLog() {
+        return args[LOG_KEY+1];
+    }
+
 }

@@ -11,35 +11,36 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * 1. Создать программу для поиска файла.
- * 2. Программа должна искать данные в заданном каталоге и подкаталогах.
- * 3. Имя файла может задаваться, целиком, по маске, по регулярному выражению(не обязательно).
- * 4. Программа должна собираться в jar и запускаться через java -jar find.jar -d=c:/ -n=*.txt -t=mask -o=log.txt
- * Ключи
- * -d - директория, в которой начинать поиск.
- * -n - имя файла, маска, либо регулярное выражение.
- * -t - тип поиска: mask искать по маске, name по полному совпадение имени, regex по регулярному выражению.
- * -o - результат записать в файл.
- * 5. Программа должна записывать результат в файл.
- * 6. В программе должна быть валидация ключей и подсказка.
+ * 1. Create a program to find a file.
+ * 2. The program must search for data in the specified directory and subdirectories.
+ * 3. The file name can be specified, entirely, by mask, by regular expression (optional).
+ * 4. The program must be compiled in jar and run via java -jar find.jar -d = c: / -n = *. Txt -t = mask -o = log.txt
+ * (java -jar find.jar -d c:\\Users\\a.kulynych\\WORKING -n * .docx -t mask -o log.txt).
+ * Keys:
+ * -d - directory where to start searching.
+ * -n - file name, mask, or regular expression.
+ * -t - search type: mask search by mask, name by full name match.
+ * -o - write the result to a file.
+ * 5. The program must write the result to a file.
+ * 6. The program must have a key validation and a hint.
+ *
+ * @author A.Kulynych
  */
 
 public class SearchFile {
     private static final Logger LOG = LoggerFactory.getLogger(SearchFiles.class.getName());
     public static StringBuilder buf = new StringBuilder();
-    private static boolean pattern;
-    FactoryPredicate ext = new FactoryPredicate();
 
-    public static List<Path> search(Path root, String ext) throws IOException {
-        SearchFiles searcher = new SearchFiles(x -> x.toFile().getName().endsWith(ext));
+    public static List<Path> search(Path root,  Predicate<Path> condition) throws IOException {
+        SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
         return searcher.getArchived();
     }
 
-    public static void writeFiles(List<Path> files) {
+    public static void writeFiles(List<Path> files, String path) {
         try (PrintWriter out = new PrintWriter(
                 new BufferedOutputStream(
-                        new FileOutputStream("LOGFILEEEEEE.txt")
+                        new FileOutputStream(path)
                 ))) {
 
             files.forEach(f -> buf.append(f + System.lineSeparator()));
@@ -50,8 +51,12 @@ public class SearchFile {
     }
 
     public static void main(String[] args) throws IOException {
-        new Parameters(args).validateParams();
-                writeFiles(search(Path.of(""), Predicate<String> pattern));
+        Parameters prm =  new Parameters(args);
+       prm.validateParams();
+       Predicate<Path> condition = new FactoryPredicate().conditionSet(prm);
+
+        List<Path>  files =  search(Path.of(prm.getDir()), condition);
+                writeFiles(files, prm.getLog());
         LOG.warn("Var buf:{}", buf);
     }
 
