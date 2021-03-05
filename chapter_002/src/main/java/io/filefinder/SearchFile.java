@@ -29,7 +29,6 @@ import java.util.function.Predicate;
 
 public class SearchFile {
     private static final Logger LOG = LoggerFactory.getLogger(SearchFiles.class.getName());
-    public static StringBuilder buf = new StringBuilder();
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
         SearchFiles searcher = new SearchFiles(condition);
@@ -42,9 +41,7 @@ public class SearchFile {
                 new BufferedOutputStream(
                         new FileOutputStream(path)
                 ))) {
-
-            files.forEach(f -> buf.append(f + System.lineSeparator()));
-            out.write(buf.toString());
+            files.forEach(out::println);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -57,7 +54,7 @@ public class SearchFile {
 
         List<Path> files = search(Path.of(prm.getDir()), condition);
         writeFiles(files, prm.getLog());
-        LOG.warn("Var buf:{}", buf);
+
     }
 
 }
