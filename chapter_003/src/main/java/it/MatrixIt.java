@@ -1,34 +1,37 @@
 package it;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
+/**
+ * Class  MatrixIt is Iterator for two-dimensional array int[][]
+ * <p>
+ *
+ * @since 2021.04.01
+ */
 public class MatrixIt implements Iterator<Integer> {
-    private final int[][] m;
-    private int i;
-    private int j;
+    private final int[][] data;
+    private int row = 0;
+    private int col;
 
-    public MatrixIt(int[][] m) {
-        this.m = m;
+    public MatrixIt(int[][] data) {
+        this.data = data;
     }
 
     @Override
     public boolean hasNext() {
-        return i < m.length && j < m[i].length;
+        while (row < data.length && col == data[row].length) {
+            row++;
+            col = 0;
+        }
+        return row < data.length && col < data[row].length;
     }
 
     @Override
     public Integer next() {
-       int res = Integer.parseInt(null);
         if (!hasNext()) {
-            new ElementMatrixEx("Matrix have't element");
+            throw new NoSuchElementException();
         }
-        if (i < m.length) {
-            j = 0;
-            res = m[i++][j];
-        } else if (j < m[i].length) {
-            res = m[i][j];
-            j++;
-        }
-        return res;
+        return data[row][col++];
     }
 }
