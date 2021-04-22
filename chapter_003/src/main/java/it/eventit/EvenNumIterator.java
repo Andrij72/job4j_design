@@ -10,14 +10,14 @@ public class EvenNumIterator implements Iterator<Integer> {
     public EvenNumIterator(int[] numbers) {
         this.massiveNumbers = numbers;
     }
-
+    @Override
     public Integer next() {
         if (!hasNext()) {
            throw new NoSuchElementException();
         }
         return massiveNumbers[elem++];
     }
-
+    @Override
     public boolean hasNext() {
         boolean res = false;
         while (elem < massiveNumbers.length) {
