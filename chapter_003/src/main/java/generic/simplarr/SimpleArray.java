@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SimpleArray<T> implements Iterable<T> {
     private final Object[] array;
-    private final int length;
+    private int length;
     private int position = 0;
     private Iterator<T> cursor = Collections.emptyIterator();
 
@@ -13,17 +13,10 @@ public class SimpleArray<T> implements Iterable<T> {
         this.length = length;
     }
 
-    public boolean add(T model) {
-        boolean res = false;
-        while (iterator().hasNext()) {
-
-            if (array[position] == null) {
-                array[position] = model;
-                res = true;
-            }
-            iterator().next();
+    public void add(T model) {
+        if (position < array.length) {
+            array[position++] = model;
         }
-        return res;
     }
 
     public void set(int index, T model) {
@@ -35,13 +28,12 @@ public class SimpleArray<T> implements Iterable<T> {
     public void remove(int index) {
         Objects.checkIndex(index, array.length);
         System.arraycopy(array, index + 1, array, index, array.length - index - 1);
-        array[length - 1] = null;
+        array[--length] = null;
     }
 
     public T get(int index) {
         Objects.checkIndex(index, array.length);
-        T t = (T) array[index];
-        return t;
+        return (T) array[index];
     }
 
 
@@ -61,7 +53,5 @@ public class SimpleArray<T> implements Iterable<T> {
                 return (T) array[position++];
             }
         };
-
     }
-
 }

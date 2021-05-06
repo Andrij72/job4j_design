@@ -22,9 +22,13 @@ public class SimpleArrayTest {
 
     @Test
     public void whenAddElementThanHaveItInArray() {
+        smplArr = new Integer[3];
+        arr = new SimpleArray(smplArr, 3);
         arr.add(100);
-        assertThat(arr.get(5), is(100));
-        assertThat(Arrays.asList(smplArr).toString(), is("[1, 2, 3, 4, 5, 100]"));
+        arr.add(200);
+        System.out.println(Arrays.asList(smplArr).toString());
+        assertThat(arr.get(1), is(200));
+        assertThat(Arrays.asList(smplArr).toString(), is("[100, 200, null]"));
     }
 
     @Test
