@@ -4,35 +4,33 @@ import java.util.*;
 
 public class SimpleArray<T> implements Iterable<T> {
     private final Object[] array;
-    private int length;
-    private int position = 0;
+    private int countElmnts = 0;
     private Iterator<T> cursor = Collections.emptyIterator();
 
-    public SimpleArray(Object[] array, int length) {
-        this.array = array;
-        this.length = length;
+    public SimpleArray(int size) {
+        this.array = new Object[size];
     }
 
     public void add(T model) {
-        if (position < array.length) {
-            array[position++] = model;
+        if (countElmnts < array.length) {
+            array[countElmnts++] = model;
         }
     }
 
     public void set(int index, T model) {
-        Objects.checkIndex(index, array.length);
+        Objects.checkIndex(index, countElmnts);
         array[index] = model;
     }
 
 
     public void remove(int index) {
-        Objects.checkIndex(index, array.length);
-        System.arraycopy(array, index + 1, array, index, array.length - index - 1);
-        array[--length] = null;
+        Objects.checkIndex(index, countElmnts);
+        System.arraycopy(array, index + 1, array, index, countElmnts - index - 1);
+        array[--countElmnts] = null;
     }
 
     public T get(int index) {
-        Objects.checkIndex(index, array.length);
+        Objects.checkIndex(index, countElmnts);
         return (T) array[index];
     }
 
@@ -42,7 +40,7 @@ public class SimpleArray<T> implements Iterable<T> {
         return new Iterator<T>() {
             @Override
             public boolean hasNext() {
-                return position < array.length;
+                return countElmnts < array.length;
             }
 
             @Override
@@ -50,7 +48,7 @@ public class SimpleArray<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (T) array[position++];
+                return (T) array[countElmnts++];
             }
         };
     }
