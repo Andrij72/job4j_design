@@ -38,9 +38,11 @@ public class SimpleArray<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
+            private int position = 0;
+
             @Override
             public boolean hasNext() {
-                return countElmnts < array.length;
+                return position < countElmnts;
             }
 
             @Override
