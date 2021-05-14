@@ -5,8 +5,6 @@ import java.util.*;
 public class SimpleArray<T> implements Iterable<T> {
     private final Object[] array;
     private int countElmnts = 0;
-    private Iterator<T> cursor = Collections.emptyIterator();
-
     public SimpleArray(int size) {
         this.array = new Object[size];
     }
@@ -22,7 +20,6 @@ public class SimpleArray<T> implements Iterable<T> {
         array[index] = model;
     }
 
-
     public void remove(int index) {
         Objects.checkIndex(index, countElmnts);
         System.arraycopy(array, index + 1, array, index, countElmnts - index - 1);
@@ -33,7 +30,6 @@ public class SimpleArray<T> implements Iterable<T> {
         Objects.checkIndex(index, countElmnts);
         return (T) array[index];
     }
-
 
     @Override
     public Iterator<T> iterator() {
