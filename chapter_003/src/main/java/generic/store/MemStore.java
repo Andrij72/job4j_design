@@ -25,7 +25,7 @@ public class MemStore<T extends Base> implements Store<T> {
     public boolean delete(String id) {
         int indx = findIndexById(id);
         if (indx != -1) {
-            arch.set(indx, null);
+            arch.remove(indx);
             return true;
         }
         return false;
