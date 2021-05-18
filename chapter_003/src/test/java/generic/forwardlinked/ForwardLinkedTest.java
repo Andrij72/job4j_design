@@ -1,5 +1,6 @@
 package generic.forwardlinked;
 
+import list.ForwardLinked;
 import org.junit.Test;
 
 import java.util.Iterator;
