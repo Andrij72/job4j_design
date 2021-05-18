@@ -4,13 +4,18 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class ForwardLinked<T> implements Iterable<T> {
-    private Node<T> head = null;
-    private Node<T> tail = null;
+    private Node head;
+    private int size;
+
+    public int size() {
+        return this.size;
+    }
 
     public void add(T value) {
         Node<T> node = new Node<T>(value, null);
         if (head == null) {
             head = node;
+            size++;
             return;
         }
         Node<T> tail = head;
@@ -18,31 +23,27 @@ public class ForwardLinked<T> implements Iterable<T> {
             tail = tail.next;
         }
         tail.next = node;
+        size++;
     }
 
     public T deleteFirst() {
-
         if (head == null) {
-            return  (T) new NoSuchElementException();
-        } else if (head.next != null) {
-            head = head.next;
-        } else {
-            head = null;
-            tail = null;
+            throw new NoSuchElementException();
         }
-        return (T) head;
+        T value = (T) head.value;
+        head = head.next;
+        size--;
+        return value;
     }
 
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             Node<T> node = head;
-
             @Override
             public boolean hasNext() {
                 return node != null;
             }
-
             @Override
             public T next() {
                 if (!hasNext()) {
@@ -53,13 +54,11 @@ public class ForwardLinked<T> implements Iterable<T> {
                 return value;
             }
         };
-
-
     }
 
     private static class Node<T> {
         T value;
-        Node<T> next;
+        Node next;
 
         public Node(T value, Node<T> next) {
             this.value = value;
