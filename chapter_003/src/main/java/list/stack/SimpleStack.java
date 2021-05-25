@@ -9,7 +9,22 @@ public class SimpleStack<T> {
      * @return T object  and delete from list
      */
     public T pop() {
-        return (T) linked.deleteLast();
+        int n = 0;
+        ForwardLinked tmp = new ForwardLinked();
+        T value = null;
+        if (linked.size() == 1) {
+            value = (T) linked.deleteFirst();
+
+        }
+        while (n < linked.size()) {
+                value = (T) linked.deleteFirst();
+                if (n != linked.size() - 2) {
+                    tmp.add(value);
+                }
+                n++;
+            }
+            linked = tmp;
+        return value;
     }
 
     /**
