@@ -14,7 +14,6 @@ public class SimpleStack<T> {
         T value = null;
         if (linked.size() == 1) {
             value = (T) linked.deleteFirst();
-
         }
         while (n < linked.size()) {
                 value = (T) linked.deleteFirst();
