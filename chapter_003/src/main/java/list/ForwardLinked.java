@@ -55,6 +55,29 @@ public class ForwardLinked<T> implements Iterable<T> {
         return current.value;
     }
 
+    public void addFirst(T data) {
+        Node<T> newNode = new Node(data, null);
+        if (head == null) {
+            head = newNode;
+        }
+        newNode.next = head;
+        head = newNode;
+    }
+
+    public void show() {
+        if (head == null) {
+            System.out.printf("\nLinkedList is  underflow");
+            System.exit(1);
+        }
+        Node<T> crntNode;
+        crntNode = head;
+        while (crntNode != null) {
+            System.out.printf("%d->", crntNode.value);
+           crntNode = crntNode.next;
+        }
+
+    }
+
     public boolean revert() {
         if (size < 2) {
             return false;
@@ -108,4 +131,22 @@ public class ForwardLinked<T> implements Iterable<T> {
             this.next = next;
         }
     }
+
+    public static void main(String[] args) {
+      ForwardLinked obj = new ForwardLinked();
+        // insert Stack value
+        obj.add(11);
+        obj.add(22);
+        obj.add(33);
+        obj.add(44);
+
+        // print Stack elements
+        obj.show();
+        obj.addFirst(55);
+        obj.addFirst(66);
+        obj.deleteFirst();
+        System.out.println("\nAfter addFirst and deleteFirst");
+        obj.show();
+    }
+
 }
