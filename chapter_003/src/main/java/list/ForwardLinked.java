@@ -59,9 +59,12 @@ public class ForwardLinked<T> implements Iterable<T> {
         Node<T> newNode = new Node(data, null);
         if (head == null) {
             head = newNode;
+            size++;
+            return;
         }
         newNode.next = head;
         head = newNode;
+        size++;
     }
 
     public void show() {
@@ -139,13 +142,15 @@ public class ForwardLinked<T> implements Iterable<T> {
         obj.add(22);
         obj.add(33);
         obj.add(44);
-
-        // print Stack elements
+        System.out.println("\nBefore revert: ");
         obj.show();
+        System.out.println("\nAfter revert");
+        obj.revert();
+        obj.show();
+        System.out.println("\nAfter addFirst and deleteFirst");
         obj.addFirst(55);
         obj.addFirst(66);
         obj.deleteFirst();
-        System.out.println("\nAfter addFirst and deleteFirst");
         obj.show();
     }
 

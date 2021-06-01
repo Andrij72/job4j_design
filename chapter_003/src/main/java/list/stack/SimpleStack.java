@@ -2,35 +2,25 @@ package list.stack;
 
 import list.ForwardLinked;
 
+import java.util.NoSuchElementException;
+
 public class SimpleStack<T> {
     ForwardLinked linked = new ForwardLinked();
-
     /**
      * @return T object  and delete from list
      */
     public T pop() {
-        int n = 0;
-        ForwardLinked tmp = new ForwardLinked();
-        T value = null;
-        if (linked.size() == 1) {
-            value = (T) linked.deleteFirst();
+        if (isEmpty()) {
+            throw new NoSuchElementException();
         }
-        while (n < linked.size()) {
-                value = (T) linked.deleteFirst();
-                if (n != linked.size() - 2) {
-                    tmp.add(value);
-                }
-                n++;
-            }
-            linked = tmp;
-        return value;
+        return (T) linked.deleteFirst();
     }
 
     /**
      * @param value add value
      */
     public void push(T value) {
-        linked.add(value);
+        linked.addFirst(value);
     }
 
     public int size() {
@@ -40,4 +30,9 @@ public class SimpleStack<T> {
     public boolean isEmpty() {
         return size() == 0;
     }
+
+    public void showStk() {
+        linked.show();
+    }
+
 }
