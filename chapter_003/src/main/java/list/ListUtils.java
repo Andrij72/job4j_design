@@ -14,7 +14,7 @@ public class ListUtils {
                 i.add(value);
                 break;
             }
-           i.next();
+            i.next();
         }
     }
 
@@ -22,7 +22,8 @@ public class ListUtils {
         Objects.checkIndex(index, list.size());
         ListIterator<T> i = list.listIterator();
         while (i.hasNext()) {
-            if (i.previousIndex() == index) {
+            if (i.nextIndex() == index) {
+                i.next();
                 i.add(value);
                 break;
             }
@@ -67,12 +68,18 @@ public class ListUtils {
         List<Integer> lst = Stream.of(1, 2, 4).collect(Collectors.toCollection(ArrayList::new));
         addBefore(lst, 2, 3);
         lst.stream().peek(s -> System.out.println(s)).collect(Collectors.toList());
+        System.out.println("******");
+
+        // addAfter
+        List<Integer> lt = Stream.of(1, 2, 4, 5).collect(Collectors.toCollection(ArrayList::new));
+        addAfter(lt, 1, 3);
+        lt.stream().peek(s -> System.out.println(s)).collect(Collectors.toList());
+
 // removeIf
         System.out.println("******");
         List<Integer> lst1 = Stream.of(11, 33, 44, 100, 55, 44).collect(Collectors.toCollection(ArrayList::new));
         removeIf(lst1, s -> s == 44);
         lst1.stream().peek(s -> System.out.println(s)).collect(Collectors.toList());
-
         // removeAll
         System.out.println("******");
         List<Integer> inpt = Stream.of(11, 33, 44).collect(Collectors.toCollection(ArrayList::new));
