@@ -1,10 +1,13 @@
 package generic.simplarr;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class SimpleArray<T> implements Iterable<T> {
     private final Object[] array;
     private int countElmnts = 0;
+
     public SimpleArray(int size) {
         this.array = new Object[size];
     }
@@ -49,5 +52,22 @@ public class SimpleArray<T> implements Iterable<T> {
                 return (T) array[countElmnts++];
             }
         };
+    }
+
+    public int size() {
+        return countElmnts;
+    }
+
+    public static void main(String[] args) {
+        SimpleArray<Integer> smpl = new SimpleArray<>(3);
+        smpl.add(10);
+        smpl.add(20);
+        smpl.add(100);
+        smpl.remove(2);
+        System.out.print("\n// remove element");
+        for (int i = 0; i < smpl.size(); i++) {
+            System.out.print(smpl.get(i) + "->");
+        }
+
     }
 }
