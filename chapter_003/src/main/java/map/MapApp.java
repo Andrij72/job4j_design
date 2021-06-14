@@ -11,5 +11,8 @@ public class MapApp {
         Map<User, Object> mp = new HashMap<>();
         mp.put(usr1, new Object());
         mp.put(usr2, new Object());
+        for (Map.Entry m : mp.entrySet()) {
+            System.out.println("Repository content elements:" + "[key:" + m.getKey().toString() + "value:" + m.getValue() + "]");
+        }
     }
 }
