@@ -31,6 +31,12 @@ public class User {
         this.birthday = birthday;
     }
 
+    public User(String name, int children, Calendar birthday) {
+        this.name = name;
+        this.children = children;
+        this.birthday = birthday;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("{");
@@ -40,14 +46,31 @@ public class User {
         return sb.toString();
     }
 
-    public User(String name, int children, Calendar birthday) {
-        this.name = name;
-        this.children = children;
-        this.birthday = birthday;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
+        User user = (User) o;
 
+        if (getChildren() != user.getChildren()) {
+            return false;
+        }
+        if (!getName().equals(user.getName())) {
+            return false;
+        }
+        return getBirthday().equals(user.getBirthday());
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        int result = getName().hashCode();
+        result = 31 * result + getChildren();
+        result = 31 * result + getBirthday().hashCode();
+        return result;
     }
 }

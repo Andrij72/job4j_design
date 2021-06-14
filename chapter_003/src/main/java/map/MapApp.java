@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class MapApp {
     public static void main(String[] args) {
-        User usr1 = new User("Roman", 2, new GregorianCalendar(1997, 11, 21));
-        User usr2 = new User("Roman", 2, new GregorianCalendar(1997, 11, 21));
+        User usr1 = new User("Roman", 2, new GregorianCalendar(1997, 11, 21, 10, 20, 1));
+        User usr2 = new User("Roman", 2, new GregorianCalendar(1997, 11, 21, 10, 20, 1));
         Map<User, Object> mp = new HashMap<>();
         mp.put(usr1, new Object());
         mp.put(usr2, new Object());
