@@ -40,7 +40,7 @@ public class SimpleSet<T> implements SetI<T> {
     public boolean contains(T value) {
         Iterator<T> it = arLists.iterator();
         while (it.hasNext()) {
-            if (it.next().equals(value)) {
+            if (Objects.equals(it.next(), value)) {
                 return true;
             }
         }
