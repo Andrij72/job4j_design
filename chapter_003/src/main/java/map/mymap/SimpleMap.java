@@ -26,24 +26,22 @@ public class SimpleMap<K, V> implements MapI<K, V> {
     public boolean put(K key, V value) {
         modCount++;
         if (size > threshold) {
-            resize();
             capacity *= 2;
+            resize();
         }
-
         Node<K, V> newNode = new Node<>(key, value);
-        int index = hash(key);
+        int index = indexFor(hash(key), capacity);
         if (hashTab[index] == null) {
             return insert(index, newNode);
         }
         for (Node<K, V> nd : hashTab[index].nodesList) {
             if (nd.key.hashCode() == key.hashCode()) {
-                if (Objects.equals(nd.value, value)) {
-                    nd.value = value;
-                }
+                // if (Objects.equals(nd.value, value)) {
+                nd.value = value;
+                //}
             }
         }
         hashTab[index].nodesList.add(newNode);
-
         return false;
     }
 
@@ -68,7 +66,7 @@ public class SimpleMap<K, V> implements MapI<K, V> {
 
     @Override
     public V get(K key) {
-        int index = hash(key);
+        int index = indexFor(hash(key), capacity);
         if (hashTab[index] != null) {
             for (Node<K, V> nd : hashTab[index].nodesList) {
                 if (Objects.equals(nd.key, key)) {
@@ -81,17 +79,19 @@ public class SimpleMap<K, V> implements MapI<K, V> {
 
     @Override
     public boolean remove(K key) {
-        int indx = hash(key);
+        int indx = indexFor(hash(key), capacity);
         if (hashTab[indx] != null) {
             for (Node<K, V> nd : hashTab[indx].nodesList) {
                 if (nd.key.hashCode() == key.hashCode()) {
-                    if (Objects.equals(nd.key, key)) {
-                        hashTab[indx].nodesList.remove(nd);
-                        size--;
-                        return true;
-                    }
+                    //if (Objects.equals(nd.key, key)) {
+                    hashTab[indx].nodesList.remove(nd);
+                    size--;
+                    modCount++;
+                    return true;
+                    //}
                 }
             }
+            return false;
         }
         return false;
     }
@@ -142,7 +142,12 @@ public class SimpleMap<K, V> implements MapI<K, V> {
     }
 
     public int hash(K key) {
-        return (key == null) ? 0 : Math.abs(key.hashCode()) & (capacity - 1);
+        int var;
+        return key == null ? 0 : (var = Math.abs(key.hashCode()) & (capacity - 1)) ^ (var >>> 16);
+    }
+
+    int indexFor(int hash, int capacity) {
+        return hash & (capacity - 1);
     }
 
     private static class Node<K, V> {
