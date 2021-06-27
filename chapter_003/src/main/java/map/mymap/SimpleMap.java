@@ -36,13 +36,14 @@ public class SimpleMap<K, V> implements MapI<K, V> {
         }
         for (Node<K, V> nd : hashTab[index].nodesList) {
             if (nd.key.hashCode() == key.hashCode()) {
-                // if (Objects.equals(nd.value, value)) {
+                if (Objects.equals(nd.key, key)) {
                 nd.value = value;
-                //}
+                return true;
+                }
             }
         }
         hashTab[index].nodesList.add(newNode);
-        return false;
+        return true;
     }
 
     private void resize() {
@@ -83,15 +84,14 @@ public class SimpleMap<K, V> implements MapI<K, V> {
         if (hashTab[indx] != null) {
             for (Node<K, V> nd : hashTab[indx].nodesList) {
                 if (nd.key.hashCode() == key.hashCode()) {
-                    //if (Objects.equals(nd.key, key)) {
+                    if (Objects.equals(nd.key, key)) {
                     hashTab[indx].nodesList.remove(nd);
                     size--;
                     modCount++;
                     return true;
-                    //}
+                    }
                 }
             }
-            return false;
         }
         return false;
     }
