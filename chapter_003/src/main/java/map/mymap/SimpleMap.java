@@ -38,7 +38,7 @@ public class SimpleMap<K, V> implements MapI<K, V> {
             if (nd.key.hashCode() == key.hashCode()) {
                 if (Objects.equals(nd.key, key)) {
                 nd.value = value;
-                return true;
+                return false;
                 }
             }
         }
@@ -143,7 +143,8 @@ public class SimpleMap<K, V> implements MapI<K, V> {
 
     public int hash(K key) {
         int var;
-        return key == null ? 0 : (var = Math.abs(key.hashCode()) & (capacity - 1)) ^ (var >>> 16);
+        var = Math.abs(key.hashCode());
+        return key == null ? 0 : var & (capacity - 1) ^ (var >>> 16);
     }
 
     int indexFor(int hash, int capacity) {
