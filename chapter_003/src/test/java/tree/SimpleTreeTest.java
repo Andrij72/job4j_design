@@ -2,8 +2,8 @@ package tree;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 
 public class SimpleTreeTest {
 
@@ -15,8 +15,10 @@ public class SimpleTreeTest {
         tree.add(1, 4);
         tree.add(4, 5);
         tree.add(5, 6);
-        assertTrue(
-                tree.findBy(6).isPresent());
+        assertThat(
+                tree.findBy(6).isPresent(),
+                is(true)
+        );
     }
 
     @Test
