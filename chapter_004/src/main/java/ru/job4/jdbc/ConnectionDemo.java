@@ -11,7 +11,6 @@ public class ConnectionDemo {
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
         Config conf = new Config();
         ClassLoader ldr = Config.class.getClassLoader();
-
         try (InputStream io = ldr.getResourceAsStream("app_load.properties")) {
             Class.forName("org.postgresql.Driver");
             conf.load(io);
