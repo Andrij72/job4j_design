@@ -12,8 +12,8 @@ public class ConnectionDemo {
         Config conf = new Config();
         ClassLoader ldr = Config.class.getClassLoader();
         try (InputStream io = ldr.getResourceAsStream("app_load.properties")) {
-            Class.forName("org.postgresql.Driver");
             conf.load(io);
+            conf.getValue("jdbc.driver");
             try (Connection connection = DriverManager.getConnection(conf.getValue("jdbc.url"),
                     conf.getValue("jdbc.username"), conf.getValue("jdbc.password"))) {
                 DatabaseMetaData metaData = connection.getMetaData();
