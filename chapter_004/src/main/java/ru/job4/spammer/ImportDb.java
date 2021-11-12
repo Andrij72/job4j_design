@@ -1,21 +1,23 @@
 package ru.job4.spammer;
 
-import java.io.*;
+import ru.job4.jdbc.Property;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class ImportDb {
-
-    private Properties cfg;
     private String dump;
+    private Connection connection;
 
-    public ImportDb(Properties cfg, String dump) {
-        this.cfg = cfg;
+    public ImportDb(String dump) throws SQLException, ClassNotFoundException {
+        initConnection();
         this.dump = dump;
     }
 
@@ -31,39 +33,38 @@ public class ImportDb {
         return users;
     }
 
+    private void initConnection() throws SQLException, ClassNotFoundException {
+        Property settings = new Property();
+        settings.load("app.properties");
+        Class.forName(settings.getValue("jdbc.driver"));
+        Connection connection = DriverManager.getConnection(settings.getValue("jdbc.url"),
+                settings.getValue("jdbc.username"), settings.getValue("jdbc.password"));
+        this.connection = connection;
+    }
+
     public void save(List<User> users) throws ClassNotFoundException, SQLException {
-        Class.forName(cfg.getProperty("jdbc.driver"));
-        try (Connection cnt = DriverManager.getConnection(
-                cfg.getProperty("jdbc.url"),
-                cfg.getProperty("jdbc.username"),
-                cfg.getProperty("jdbc.password")
-        )) {
-            for (User user : users) {
-                try (PreparedStatement ps = cnt.prepareStatement("INSERT INTO users(usr_name,email) VALUES(?,?);")) {
-                    ps.setString(1, user.name);
-                    ps.setString(2, user.email);
-                    ps.executeUpdate();
-                }
+
+        for (User user : users) {
+            try (PreparedStatement ps = connection.prepareStatement("INSERT INTO users(usr_name,email) VALUES(?,?);")) {
+                ps.setString(1, user.name);
+                ps.setString(2, user.email);
+                ps.executeUpdate();
             }
         }
+        initConnection();
     }
 
     private static class User {
         String name;
         String email;
-
         public User(String name, String email) {
             this.name = name;
             this.email = email;
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        Properties cfg = new Properties();
-        try (FileInputStream in = new FileInputStream("./chapter_004/app.properties")) {
-            cfg.load(in);
-        }
-        ImportDb db = new ImportDb(cfg, "./chapter_004/dump.txt");
+    public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
+        ImportDb db = new ImportDb("./chapter_004/dump.txt");
         db.save(db.load());
     }
 }
