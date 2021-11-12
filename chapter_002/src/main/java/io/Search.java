@@ -6,6 +6,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * For searching input parameters:   D:\projects\job4j_design\  .java
+ */
 public class Search {
     public static void main(String[] args) throws IOException {
         if (args.length != 2) {
