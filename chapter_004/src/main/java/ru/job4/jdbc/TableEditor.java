@@ -12,15 +12,14 @@ public class TableEditor implements AutoCloseable {
 
     private Property properties;
 
-    public TableEditor(Property properties) throws SQLException, IOException, ClassNotFoundException {
+    public TableEditor(Property properties) throws SQLException, IOException {
         this.properties = properties;
         initConnection();
     }
 
-     private void initConnection() throws SQLException, ClassNotFoundException, IOException {
+     private void initConnection() throws SQLException, IOException {
         Property settings = new Property();
-        settings.load("app_load.properties");
-        Class.forName(settings.getValue("jdbc.driver"));
+         settings.load("app_load.properties");
         Connection connection = DriverManager.getConnection(settings.getValue("jdbc.url"),
                 settings.getValue("jdbc.username"), settings.getValue("jdbc.password"));
         this.connection = connection;
