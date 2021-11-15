@@ -11,11 +11,12 @@ public class FactoryPredicate {
 
         switch (params.getSearchType().toLowerCase()) {
             case "name":
-                return option = new FinderConditions(params.getExtKey());
+                return new FinderConditions(params.getExtKey());
             case "mask":
-                return option = new FinderConditions(this.getMask(params.getExtKey()));
+                return new FinderConditions(this.getMask(params.getExtKey()));
+            default:
+                throw new IllegalStateException("Unexpected value: " + params.getSearchType().toLowerCase());
         }
-        return option;
     }
 
     public class FinderConditions implements Predicate<Path> {
