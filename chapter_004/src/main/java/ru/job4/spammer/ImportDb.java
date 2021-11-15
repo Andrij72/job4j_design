@@ -16,7 +16,7 @@ public class ImportDb {
     private String dump;
     private Connection connection;
 
-    public ImportDb(String dump) throws SQLException, ClassNotFoundException {
+    public ImportDb(String dump) throws SQLException, ClassNotFoundException, IOException {
         initConnection();
         this.dump = dump;
     }
@@ -33,7 +33,7 @@ public class ImportDb {
         return users;
     }
 
-    private void initConnection() throws SQLException, ClassNotFoundException {
+    private void initConnection() throws SQLException, ClassNotFoundException, IOException {
         Property settings = new Property();
         settings.load("app.properties");
         Class.forName(settings.getValue("jdbc.driver"));
@@ -42,7 +42,7 @@ public class ImportDb {
         this.connection = connection;
     }
 
-    public void save(List<User> users) throws ClassNotFoundException, SQLException {
+    public void save(List<User> users) throws ClassNotFoundException, SQLException, IOException {
 
         for (User user : users) {
             try (PreparedStatement ps = connection.prepareStatement("INSERT INTO users(usr_name,email) VALUES(?,?);")) {

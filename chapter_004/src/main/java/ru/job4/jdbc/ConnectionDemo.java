@@ -7,11 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionDemo {
-    public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
+    public static void main(String[] args) throws SQLException, IOException {
         Property conf = new Property();
-        ClassLoader ldr = Property.class.getClassLoader();
             conf.load("app_load.properties");
-            conf.getValue("jdbc.driver");
             try (Connection connection = DriverManager.getConnection(conf.getValue("jdbc.url"),
                     conf.getValue("jdbc.username"), conf.getValue("jdbc.password"))) {
                 DatabaseMetaData metaData = connection.getMetaData();
