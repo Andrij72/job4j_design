@@ -17,7 +17,7 @@ public class TableEditor implements AutoCloseable {
         initConnection();
     }
 
-     private void initConnection() throws SQLException, ClassNotFoundException {
+     private void initConnection() throws SQLException, ClassNotFoundException, IOException {
         Property settings = new Property();
         settings.load("app_load.properties");
         Class.forName(settings.getValue("jdbc.driver"));

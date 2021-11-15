@@ -1,6 +1,6 @@
 package ru.job4.jdbc;
 
-import java.io.InputStream;
+import java.io.IOException;
 
 public class Property {
     private final java.util.Properties prs = new java.util.Properties();
@@ -9,12 +9,7 @@ public class Property {
         return this.prs.getProperty(key);
     }
 
-    public void load(String filename) {
-        ClassLoader ldr = Property.class.getClassLoader();
-        try (InputStream io = ldr.getResourceAsStream(filename)) {
-            this.prs.load(io);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void load(String filename) throws IOException {
+            this.prs.load(Property.class.getClassLoader().getResourceAsStream(filename));
     }
 }
