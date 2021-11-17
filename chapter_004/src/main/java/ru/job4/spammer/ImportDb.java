@@ -5,10 +5,7 @@ import ru.job4.jdbc.Property;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +18,7 @@ public class ImportDb {
         this.dump = dump;
     }
 
-    public List<User> load() throws IOException {
+    public List<User> load() {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(ln -> {
@@ -29,13 +26,16 @@ public class ImportDb {
                     users.add(new User(ln.substring(0, ln.indexOf(";")), ln.substring(ln.indexOf(";") + 1)));
                 }
             });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return users;
     }
 
     private void initConnection() throws SQLException, ClassNotFoundException, IOException {
         Property settings = new Property();
-        settings.load("app.properties");
+            settings.load("app.properties");
+
         Class.forName(settings.getValue("jdbc.driver"));
         Connection connection = DriverManager.getConnection(settings.getValue("jdbc.url"),
                 settings.getValue("jdbc.username"), settings.getValue("jdbc.password"));
@@ -54,17 +54,21 @@ public class ImportDb {
         initConnection();
     }
 
-    private static class User {
-        String name;
-        String email;
-        public User(String name, String email) {
-            this.name = name;
-            this.email = email;
+        public List<User> findAll() {
+        List<User> usrs = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement("select * from users")) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    usrs.add(new User(
+                            resultSet.getString("usr_name"),
+                            resultSet.getString("email")
+                    ));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return usrs;
     }
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
-        ImportDb db = new ImportDb("./chapter_004/dump.txt");
-        db.save(db.load());
-    }
 }
