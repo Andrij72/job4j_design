@@ -41,8 +41,6 @@ public class ParkingAutoTest {
         ParkingAuto parkingAuto = new ParkingAuto(2, 1);
         parkingAuto.park(truck1);
         parkingAuto.park(truck2);
-        //parkingAuto.park(car1);
-       // parkingAuto.park(car2);
         boolean result = parkingAuto.park(car3);
         assertThat(result, is(false));
     }

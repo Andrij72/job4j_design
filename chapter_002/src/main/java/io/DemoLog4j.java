@@ -15,6 +15,6 @@ public class DemoLog4j {
         boolean f = true;
         boolean g = false;
         char h = 40;
-        LOG.debug("Var a:{}, Var b:{}, Var c:{}, Var d:{}, Var e:{}, Var f:{}, Var g:{}, Var h:{}", a, b, c, d, e, f, g, h);
+        LOG.error("Var a:{}, Var b:{}, Var c:{}, Var d:{}, Var e:{}, Var f:{}, Var g:{}, Var h:{}", a, b, c, d, e, f, g, h);
     }
 }

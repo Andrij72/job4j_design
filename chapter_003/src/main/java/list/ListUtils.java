@@ -38,7 +38,6 @@ public class ListUtils {
                 i.remove();
             }
         }
-
     }
 
     public static <T> void replaceIf(List<T> list, Predicate<T> filter, T value) {
@@ -49,7 +48,6 @@ public class ListUtils {
                 i.set(value);
             }
         }
-
     }
 
     public static <T> void removeAll(List<T> list, List<T> elements) {
@@ -61,7 +59,6 @@ public class ListUtils {
                 i.remove();
             }
         }
-
     }
 
     public static void main(String[] args) {
@@ -70,22 +67,19 @@ public class ListUtils {
         lst.stream().peek(s -> System.out.println(s)).collect(Collectors.toList());
         System.out.println("******");
 
-        // addAfter
         List<Integer> lt = Stream.of(1, 2, 4, 5).collect(Collectors.toCollection(ArrayList::new));
         addAfter(lt, 1, 3);
         lt.stream().peek(s -> System.out.println(s)).collect(Collectors.toList());
 
-// removeIf
         System.out.println("******");
         List<Integer> lst1 = Stream.of(11, 33, 44, 100, 55, 44).collect(Collectors.toCollection(ArrayList::new));
         removeIf(lst1, s -> s == 44);
         lst1.stream().peek(s -> System.out.println(s)).collect(Collectors.toList());
-        // removeAll
+
         System.out.println("******");
         List<Integer> inpt = Stream.of(11, 33, 44).collect(Collectors.toCollection(ArrayList::new));
         List<Integer> bz = new ArrayList<>(Arrays.asList(1, 2, 3, 11, 33, 44));
         removeAll(bz, inpt);
         bz.stream().peek(s -> System.out.println(s)).collect(Collectors.toList());
     }
-
 }

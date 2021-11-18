@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 
 public class Analizy {
 
-    /**It's first variant of log server analise method
+    /**
+     * It's first variant of log server analise method
+     *
      * @param source
      * @param target
      */
@@ -38,7 +40,9 @@ public class Analizy {
         }
     }
 
-    /**It's 2-nd variant of log server analise method
+    /**
+     * It's 2-nd variant of log server analise method
+     *
      * @param source
      * @param target
      */
@@ -68,7 +72,9 @@ public class Analizy {
         }
     }
 
-    /**It's third variant of log server analise method
+    /**
+     * It's third variant of log server analise method
+     *
      * @param source
      * @param target
      */
@@ -108,7 +114,6 @@ public class Analizy {
     }
 
     public static void main(String[] args) {
-        //anotherUnavailable("servers.log", "unavailable.csv");
         checkLog("servers.log", "unavailable.csv");
     }
 }

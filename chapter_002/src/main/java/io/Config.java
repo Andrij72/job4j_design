@@ -28,6 +28,5 @@ public class Config {
     public String value(String key) {
 
         return values.get(key);
-        //throw new UnsupportedOperationException("Petr Arsentev");
     }
 }

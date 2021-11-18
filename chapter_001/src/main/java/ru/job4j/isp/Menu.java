@@ -45,5 +45,4 @@ public class Menu {
         newMenu.add("Задача 2", newItm2);
         newMenu.print();
     }
-
 }

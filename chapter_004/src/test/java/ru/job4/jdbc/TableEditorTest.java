@@ -25,10 +25,7 @@ public class TableEditorTest {
             expected.append(String.format("%-15s|%-15s%n", "column_name", "type"));
             expected.append(String.format("%-15s|%-15s%n", "column1", "varchar"));
             expected.append(String.format("%-15s|%-15s%n", "column_change", "varchar"));
-            assertThat(tableEditor.getTableScheme("test"), is(expected.toString()));
-            //assert tableEditor.getTableScheme("test").equals(is(String.format("%-15s|%-15s%n",
-            // "column_name", "type"))) : "Table was deleted , your method is worked";
-
+            assertThat(tableEditor.getTableScheme("test"), is(expected.toString()));            //h
         }
     }
 

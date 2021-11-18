@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 public class SmplListFiles {
     public static void main(String[] args) throws IOException {
         final File folder = new File("C:\\Users\\a.kulynych\\WORKING");
-        // listFilesForFolder(folder);
+
         getListDir("C:\\Users\\a.kulynych\\WORKING");
 
     }

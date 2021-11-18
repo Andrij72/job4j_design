@@ -64,7 +64,7 @@ public class SimpleArray<T> implements Iterable<T> {
         smpl.add(20);
         smpl.add(100);
         smpl.remove(2);
-        System.out.print("\n// remove element");
+        System.out.print("/ remove element");
         for (int i = 0; i < smpl.size(); i++) {
             System.out.print(smpl.get(i) + "->");
         }

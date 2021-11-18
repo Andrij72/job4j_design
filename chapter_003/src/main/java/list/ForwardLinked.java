@@ -137,7 +137,7 @@ public class ForwardLinked<T> implements Iterable<T> {
 
     public static void main(String[] args) {
       ForwardLinked obj = new ForwardLinked();
-        // insert Stack value
+
         obj.add(11);
         obj.add(22);
         obj.add(33);
@@ -153,5 +153,4 @@ public class ForwardLinked<T> implements Iterable<T> {
         obj.deleteFirst();
         obj.show();
     }
-
 }

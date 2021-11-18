@@ -3,7 +3,9 @@ package ru.job4j.lsp.cars;
 public class ParkingAndControlImpl implements Parking, ControlParking {
     private int carPlace;
     private int trPlace;
-    // the size of the car parking lot is 1
+    /**
+     * this constant is the size of the car parking lot is
+     */
     private static final int CAR_SIZE_PLACE = 1;
 
 
@@ -31,7 +33,10 @@ public class ParkingAndControlImpl implements Parking, ControlParking {
 
     @Override
     public boolean park(Vehicle vcl) {
-        //for trucks,if there is a shortage of cargo areas, select the number of carspaceces according to the truck size
+        /**
+         * for trucks,if there is a shortage of cargo areas,
+         * select the number of carspaceces according to the truck size
+         */
         boolean res = false;
 
         if (vcl.size() <= CAR_SIZE_PLACE && getQuantityFreePlaces(vcl) != 0) {
@@ -47,7 +52,6 @@ public class ParkingAndControlImpl implements Parking, ControlParking {
                 res = true;
             }
         }
-
         return res;
     }
 }
