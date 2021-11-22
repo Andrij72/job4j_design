@@ -8,10 +8,16 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class ImportDb {
     private String dump;
     private Connection connection;
+    private Pattern userNamePattern = Pattern
+            .compile("^[\\p{L}\\s.’\\-,]+$");
+    private Pattern emailPattern = Pattern
+            .compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$");
+
 
     public ImportDb(String dump) throws SQLException, ClassNotFoundException, IOException {
         initConnection();
@@ -22,12 +28,16 @@ public class ImportDb {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(ln -> {
-                if (!ln.isEmpty()) {
-                    users.add(new User(ln.substring(0, ln.indexOf(";")), ln.substring(ln.indexOf(";") + 1)));
+                String[] tmp = ln.split(";");
+                if (tmp.length > 1
+                     && userNamePattern.matcher(tmp[0]).matches()
+                       && emailPattern.matcher(tmp[1]).matches()) {
+                    users.add(new User(tmp[0], tmp[1]));
                 }
+
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e);
         }
         return users;
     }

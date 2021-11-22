@@ -17,7 +17,6 @@ public class SettingsTest {
     public void whenLoadWithIndep() throws IOException {
         Settings settings = new Settings();
         File file = new File("./app.properties");
-        //File file_test = new File("./../"); parent path
         File fileTest = new File("./");
         Arrays.stream(fileTest.listFiles()).forEach(System.out::println);
         try (FileInputStream io = new FileInputStream(file)) {

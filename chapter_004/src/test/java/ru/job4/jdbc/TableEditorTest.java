@@ -25,7 +25,7 @@ public class TableEditorTest {
             expected.append(String.format("%-15s|%-15s%n", "column_name", "type"));
             expected.append(String.format("%-15s|%-15s%n", "column1", "varchar"));
             expected.append(String.format("%-15s|%-15s%n", "column_change", "varchar"));
-            assertThat(tableEditor.getTableScheme("test"), is(expected.toString()));            //h
+            assertThat(tableEditor.getTableScheme("test"), is(expected.toString()));
         }
     }
 
